@@ -1,8 +1,33 @@
 <p>Formulário de uma nova viagem, deve conter:</p>
-    <ul>
-        <li>Nome</li>
-        <li>Destino</li>
-        <li>Datas</li>
-        <li>Qtde de pessoas</li>
-    </ul>
+<ul>
+    <li>Nome</li>
+    <li>Destino</li>
+    <li>Datas</li>
+    <li>Qtde de pessoas</li>
+</ul>
 
+
+
+<div class="wrapper">
+    <h2>New Trip</h2>
+    <form (ngSubmit)="onSubmit()">
+        <div>
+            <label for="destination">Destination</label>
+            <input type="text" id="destination" name="destination" [(ngModel)]="enteredDestination">
+        </div>
+
+        <div>
+            <label for="startdate">Start Date</label>
+            <input type="date" id="startdate" name="startdate" [(ngModel)]="enteredStartDate">
+        </div>
+
+        <div>
+            <label for="enddate">End Date</label>
+            <input type="date" id="enddate" name="enddate" [(ngModel)]="enteredEndDate">
+        </div>
+
+        <div>
+            <button type="submit">Add</button>
+        </div>
+    </form>
+</div>

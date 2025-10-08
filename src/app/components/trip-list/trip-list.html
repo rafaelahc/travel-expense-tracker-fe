@@ -1,12 +1,11 @@
-<div *ngIf="trips.length === 0">
-  <p>You don't have any registered trips yet!</p>
+<div>
+  <ul>
+    @if (trips.length !== 0) {
+    @for (trip of trips; track trip.destination) {
+    <li><a [routerLink]="['/trip-details', trip.id]"> {{trip.destination}} </a></li>
+    }
+    } @else {
+    <p>You don't have any registered trips yet!</p>
+    }
+  </ul>
 </div>
-
-<ul *ngIf="trips.length > 0">
-  <li *ngFor="let trip of trips">
-    <a (click)="showTripDetails(trip.id)">{{ trip.destination}} </a>
-    <!-- <button (click)="showQtyPeople(trip)">Quantidade de pessoas da viagem</button> -->
-  </li>
-</ul>
-
-<!-- <p>{{ qtyTripPeople }}</p> -->

@@ -17,5 +17,5 @@ export const routes: Routes = [
     {path: 'dashboard', component: Dashboard},
     {path: 'trip-details/:id', component: TripDetails},
     {path: 'trip-form', component: TripForm},
-    {path: 'expense-form', component: ExpenseForm}
+    {path: 'expense-form/:id', component: ExpenseForm}
 ];

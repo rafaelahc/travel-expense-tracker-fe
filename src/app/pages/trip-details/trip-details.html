@@ -1,3 +1,19 @@
-<p>trip-details works!</p>
-<p>Detalhe da viagem aqui: destino, data, quantidade de pessoas, valores e botão de novo gasto</p>
-<button routerLink="/expense-form">Adicionar nova despesa</button>
+@if (trip) {
+<div>
+    <div class="header">
+        <h2>{{ trip.destination }}</h2>
+
+        <p><strong>Start:</strong> {{ trip.startdate }}</p>
+        <p><strong>End:</strong> {{ trip.enddate }}</p>
+    </div>
+
+</div>
+
+<div class="expense-content">
+    <app-expense-list />
+</div>
+
+
+}
+
+<button (click)="openNewExpense()">Adicionar nova despesa</button>
