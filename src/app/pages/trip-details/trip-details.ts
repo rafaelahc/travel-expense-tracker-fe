@@ -21,6 +21,8 @@ export class TripDetails {
   //declaro uma propriedade aqui, onde irá receber valores de Trip. Ou tbm pode ser undefined
   trip?: Trip;
 
+  days?: string;
+
   //é como se fosse meu array com todos os gastos
   expenses?: Expense[];
 
@@ -32,7 +34,7 @@ export class TripDetails {
     if (tripId) {
       this.trip = this.tripService.getTrips().find(t => t.id === tripId);
       this.expenses = this.expenseService.getExpenses().filter(exp => exp.tripId === tripId);
-      console.log("expenses:", this.expenses);
+      console.log('trip', this.trip)
     }
   }
 

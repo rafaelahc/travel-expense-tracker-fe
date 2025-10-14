@@ -1,19 +1,27 @@
 @if (trip) {
+
 <div>
     <div class="header">
         <h2>{{ trip.destination }}</h2>
 
-        <p><strong>Start:</strong> {{ trip.startdate }}</p>
-        <p><strong>End:</strong> {{ trip.enddate }}</p>
-    </div>
+        <div>
+            <p>{{ trip.startdate }} - {{ trip.enddate }}</p>
+            <p>{{ trip.days}} days</p>
+        </div>
 
+
+        <div class="total">
+            <span>590,00</span>
+        </div>
+    </div>
 </div>
 
 <div class="expense-content">
-    <app-expense-list />
+    <div class="test">
+        <app-expense-list />
+    </div>
+
 </div>
-
-
 }
 
 <button (click)="openNewExpense()">Adicionar nova despesa</button>

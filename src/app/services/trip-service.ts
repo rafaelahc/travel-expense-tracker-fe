@@ -14,7 +14,6 @@ import { JsonPipe } from '@angular/common';
 
 export class TripService {
 
-
   //Array vazio onde eu vou receber as viagens que o usuário cadastrou no formulário.
   private trips: Trip[] = [
   ];
@@ -26,7 +25,6 @@ export class TripService {
       this.trips = JSON.parse(trips);
     }
   }
-
 
   /* Como o array está private, eu preciso liberar ele para outros componentes acessarem: */
   //Crio um método do tipo Trip, ou seja, com os dados do meu model.

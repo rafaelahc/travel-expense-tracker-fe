@@ -10,7 +10,7 @@ import { type Expense } from '../models/expense.model'
 export class ExpenseService {
   //Array vazio onde eu vou receber as despesas que o usuário cadastrou no formulário.
   private expenses: Expense[] = [];
-  public expPerCategory: { [category: string]: Expense[] } = {};
+
 
   constructor() {
     const expenses = localStorage.getItem('expenses');
@@ -20,13 +20,17 @@ export class ExpenseService {
 
   }
 
+  getExpenseByCategory(categoryId: string): Expense[] {
+    return this.expenses.filter(expense => expense.categoryId === categoryId);
+  }
+
   //Como o array está private, eu preciso liberar ele para outros componentes acessarem: */
   //Crio um método do tipo Expense, ou seja, com os dados do meu model.
   getExpenses(): Expense[] {
-    console.log('quantidade que tem no array:', this.expenses.length);
     return this.expenses;
   }
 
+  
   // Retorna apenas os gastos de uma viagem específica
   getExpensesByTrip(tripId: string): Expense[] {
     return this.expenses.filter(e => e.tripId === tripId);
@@ -36,13 +40,6 @@ export class ExpenseService {
   addExpense(newExpense: Expense) {
     //o que eu receber que vem no parametro, eu coloco no meu array expenses.
     this.expenses.push(newExpense);
-    const catId = newExpense.categoryId;
-
-    if (!this.expPerCategory[catId]) {
-      this.expPerCategory[catId] = []; // cria o array se não existir
-    }
-
-    this.expPerCategory[catId].push(newExpense);
 
     this.saveExpenses();
   }

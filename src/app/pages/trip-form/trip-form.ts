@@ -20,12 +20,22 @@ export class TripForm {
   constructor(private tripService: TripService, private router: Router) { }
 
   onSubmit() {
+
+    //pegar a quantidade de dias
+    const startDate = new Date(this.enteredStartDate);
+    const endDate = new Date(this.enteredEndDate);
+    const dateDiferenceInMs = endDate.getTime() - startDate.getTime();
+    const totalMsperDay = 1000 * 60 * 60 * 24; //Milisegundos que existe em 1 dia.
+    const days = dateDiferenceInMs / totalMsperDay;
+
     //criar model com base nos valores que p user preencheu  no form  
+
     const newTrip: Trip = {
       id: Date.now().toString(),
       destination: this.enteredDestination,
       startdate: this.enteredStartDate,
-      enddate: this.enteredEndDate
+      enddate: this.enteredEndDate,
+      days: days
     };
 
     this.tripService.addTrip(newTrip);

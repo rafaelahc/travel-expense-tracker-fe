@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+@use './themes/base/fonts';
+@use './themes/base/typography';
+@use './themes/base/reset';
+@use './themes/abstracts/variables.scss';
+

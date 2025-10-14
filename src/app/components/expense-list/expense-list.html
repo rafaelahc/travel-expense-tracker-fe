@@ -1,7 +1,18 @@
-@for (expense of expenses; track expense.id) {
+<div class="expense-wrapper">
+  @for (category of categories; track category.id) {
+  <div class="expense-cat">
+    <h3>{{category.name}}</h3>
 
-<p><strong>Category:</strong> {{ expense.categoryId }}</p>
-<p><strong>Descripton:</strong> {{ expense.description }}</p>
-<p><strong>Value:</strong> {{ expense.value }}</p>
-
-}
+    <div class="expense">
+      @if (getExpensesByCategory(category.id).length > 0) {
+      @for (expense of getExpensesByCategory(category.id); track expense.id) {
+      <p><strong>Descrição:</strong> {{ expense.description | titlecase }}</p>
+      <p><strong>Valor:</strong> {{ expense.value}}</p>
+      }
+      } @else {
+      <p>Nenhum gasto nesta categoria.</p>
+      }
+    </div>
+  </div>
+  }
+</div>
