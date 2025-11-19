@@ -1,27 +1,57 @@
 @if (trip) {
-
+    
 <div>
-    <div class="header">
+    <div class="header" [ngStyle]="{'background-image': 'url(' + trip.selectedImage?.webformatURL + ')',
+                 'background-size': 'cover',
+                 'background-position': 'center'}">
         <h2>{{ trip.destination }}</h2>
 
         <div>
             <p>{{ trip.startdate }} - {{ trip.enddate }}</p>
+            @if (trip.days === 1) {
+            <p>{{ trip.days}} day</p>
+            } @else {
             <p>{{ trip.days}} days</p>
+            }
+
+            <p>{{trip.peopleQty}} people</p>
         </div>
 
 
         <div class="total">
-            <span>590,00</span>
+            <span>{{totalExpense}}</span>
+        </div>
+
+        <div>
+            <button (click)="openNewBackground()">background</button>
         </div>
     </div>
+
 </div>
 
 <div class="expense-content">
     <div class="test">
-        <app-expense-list />
+        <app-expense-list [userId]="userId" [tripId]="tripId" [selectedCategory]="selectedCategory" />
     </div>
 
 </div>
+
+@if (showImageModal) {
+<div class="modal">
+    <div class="modal-content">
+        <span class="close-modal" (click)="closeImageModal()"></span>
+        <app-image [userQuery]="trip.destination" (imageSelected)="imageSelected($event)"></app-image>
+    </div>
+</div>
 }
 
-<button (click)="openNewExpense()">Adicionar nova despesa</button>
+
+@if(tripId) {
+<footer>
+    <button appButton class="btn-icon" routerLink="/dashboard"><i class="icon-list"></i></button>
+    <button appButton class="btn-icon" (click)="openNewExpense(tripId)"><i class="icon-add"></i></button>
+    <button appButton class="btn-icon"><i class="icon-download"></i></button>
+</footer>
+}
+
+}

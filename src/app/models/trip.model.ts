@@ -3,6 +3,9 @@ export interface Trip {
     destination: string,
     startdate: string,
     enddate: string,
-    days: number
+    days: number,
+    peopleQty: string,
+    selectedImage: any
+
 }
 

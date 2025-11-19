@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Category } from '../models/category.model';
+
+import { ExpenseService } from './expense-service';
 
 @Injectable({
   providedIn: 'root'

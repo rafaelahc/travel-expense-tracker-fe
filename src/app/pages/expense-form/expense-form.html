@@ -1,88 +1,28 @@
-<!-- <div class="wrapper">
-    <h2>New Expense</h2>
-
-
-    <form #expenseForm="ngForm" (ngSubmit)="onSubmit(expenseForm)">
-        <div>
-            <label for="category">Select a category:</label>
-            @for (category of categories; track category.id) {
-            <button (click)="selectedCategory(category.id)" [class.selected]="enteredCategoryId === category.id"
-                type="button">{{category.name}}</button>
-            }
-        </div>
-
-        <div>
-            <label for="description">Description:</label>
-            <input type="text" id="description" required minlength="3" name="description" [(ngModel)]="enteredDescription" #descCtrl="ngModel">
-        </div>
-
-        <div>
-            <label for="value">Value:</label>
-            <input type="text" id="value" name="value" [(ngModel)]="enteredValue" #valueCtrl="ngModel">
-        </div>
-
-        <div>
-            <button type="submit">Add</button>
-        </div>
-    </form>
-</div> -->
-
-
 <div class="wrapper">
   <h2>New Expense</h2>
 
-  <form #expenseForm="ngForm" (ngSubmit)="onSubmit(expenseForm)">
+  <form [formGroup]="expenseForm"  (ngSubmit)="onSubmit()">
     <div>
-      <label for="category">Select a category:</label>
+      <label for="category">Category:</label>
 
       @for (category of categories; track category.id) {
-        <button
-          type="button"
-          (click)="selectedCategory(category.id)"
-          [class.selected]="enteredCategoryId === category.id">
-          {{ category.name }}
-        </button>
+      <button type="button" class="btn-category" (click)="selectedCategory(category.id)"
+        [class.selected]="expenseForm.get('categoryId')?.value  === category.id">
+        {{ category.name }}
+      </button>
       }
 
-      @if (!enteredCategoryId && formSubmitted) {
-        <p style="color:red;">Selecione uma categoria!</p>
-      }
-    </div>
+    <app-control label="Description: ">
+      <input type="text" id="description" name="description" required minlength="3" formControlName="description">
+    </app-control>
 
-    <div>
-      <label for="description">Description:</label>
-      <input
-        type="text"
-        id="description"
-        name="description"
-        required
-        minlength="3"
-        [(ngModel)]="enteredDescription"
-        #descCtrl="ngModel">
-      
-      @if (descCtrl.invalid && (descCtrl.touched || formSubmitted)) {
-        <p style="color:red;">Descrição obrigatória (mínimo 3 caracteres)</p>
-      }
-    </div>
+    <app-control label="Value: ">
+      <input type="number" id="value" name="value" formControlName="value">
+    </app-control>
 
     <div>
-      <label for="value">Value:</label>
-      <input
-        type="number"
-        id="value"
-        name="value"
-        required
-        min="1"
-        [(ngModel)]="enteredValue"
-        #valueCtrl="ngModel">
-      
-      @if (valueCtrl.invalid && (valueCtrl.touched || formSubmitted)) {
-        <p style="color:red;">Valor obrigatório (mínimo 1)</p>
-      }
+      <button appButton type="submit">Add</button>
     </div>
-
-    <div>
-      <button type="submit">Add</button>
     </div>
   </form>
 </div>

@@ -1,1 +1,21 @@
-<p>login works!</p>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <app-control>
+        <input formControlName="email" placeholder="email">
+    </app-control>
+    <app-control>
+        <input formControlName="password" type="password" placeholder="password">
+    </app-control>
+
+    <button appButton type="submit" [disabled]="loginForm.invalid">Login</button>
+</form>
+
+@if(error) {
+<div>
+    <p style="color: red;">{{error}}</p>
+</div>
+}
+
+
+<div>
+    <span>Don't have an account? <a routerLink="/register">Register</a></span>
+</div>

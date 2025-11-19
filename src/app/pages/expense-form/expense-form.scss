@@ -1,3 +1,13 @@
+.btn-category {
+    background-color: var(--inputColor);
+    border: none;
+    margin: 0 8px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-family: var(--font-heading);
+}
+
 .selected {
-    background-color: red;
+    background-color: var(--beige);
 }

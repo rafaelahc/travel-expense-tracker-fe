@@ -1,23 +1,59 @@
 <div class="wrapper">
-    <h2>New Trip</h2>
-    <form (ngSubmit)="onSubmit()">
-        <div>
-            <label for="destination">Destination: </label>
-            <input type="text" id="destination" name="destination" [(ngModel)]="enteredDestination" placeholder="Ex. Paris">
-        </div>
+    <h2>Add A New Trip</h2>
 
-        <div>
-            <label for="startdate">Start Date</label>
+    <!-- <form (ngSubmit)="onSubmit()">
+
+        <app-control label="Destination: ">
+            <input type="text" id="destination" name="destination" [(ngModel)]="enteredDestination"
+                placeholder="Ex. Paris" #form>
+            <ng-content input></ng-content>
+        </app-control>
+
+        <app-control label="Start Date: ">
             <input type="date" id="startdate" name="startdate" [(ngModel)]="enteredStartDate">
-        </div>
+        </app-control>
 
-        <div>
-            <label for="enddate">End Date</label>
+        <app-control label="End Date: ">
             <input type="date" id="enddate" name="enddate" [(ngModel)]="enteredEndDate">
+        </app-control>
+
+        <div class="people-qty">
+            <span class="decrement">-</span>
+            <input type="text" placeholder="1" name="peopleQty" [(ngModel)]="enteredPplQty">
+            <span class="increment">+</span>
         </div>
 
         <div>
-            <button type="submit">Add</button>
+            <button appButton type="submit">Add</button>
+        </div>
+    </form> -->
+
+    <!-- REACTIVE FORMS -->
+
+    <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+
+        <app-control label="Destination: ">
+            <input type="text" id="destination" name="destination" placeholder="Ex. Paris" #form
+                formControlName="destination">
+            <ng-content input></ng-content>
+        </app-control>
+
+        <app-control label="Start Date: ">
+            <input type="date" id="startdate" name="startdate" formControlName="startDate">
+        </app-control>
+
+        <app-control label="End Date: ">
+            <input type="date" id="enddate" name="enddate" formControlName="endDate">
+        </app-control>
+
+        <div class="people-qty">
+            <span class="decrement">-</span>
+            <input type="text" placeholder="1" name="peopleQty" formControlName="peopleQty">
+            <span class="increment">+</span>
+        </div>
+
+        <div>
+            <button appButton type="submit" [disabled]="!tripForm.valid">Add</button>
         </div>
     </form>
 </div>

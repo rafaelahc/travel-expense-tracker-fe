@@ -1,9 +1,23 @@
-<h2>Hello Rafaela</h2>
+<div class="dashboard-header">
+    <div>
+        <h3>Hello {{userName}}</h3>
+        <p>{{userEmail}}</p>
+    </div>
+    <div>
+        @if(isAuthenticated) {
+        <a (click)="onLogout()">Logout</a>
+        }
+    </div>
 
+</div>
 
-<span>Your trips</span>
-<app-trip-list></app-trip-list>
+<div class="dashboard-content">
+    <div>
+        <h4>Your trips</h4>
+        <app-trip-list [userId]="userId" [userToken]="userToken"></app-trip-list>
+    </div>
 
-<div>
-    <a routerLink="/trip-form" class="btn btn-primary">Add New Trip</a>
-</div> 
+    <div class="bottom-bar">
+        <a appButton routerLink="/trip-form" class="btn btn-primary">Add New Trip</a>
+    </div>
+</div>

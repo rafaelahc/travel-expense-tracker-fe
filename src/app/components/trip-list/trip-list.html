@@ -1,8 +1,14 @@
-<div>
+<div class="trip-list-wrapper">
   <ul>
     @if (trips.length !== 0) {
     @for (trip of trips; track trip.destination) {
-    <li><a [routerLink]="['/trip-details', trip.id]"> {{trip.destination}} </a></li>
+    <li>
+      <a [routerLink]="['/trip-details', trip.id]">
+        <span> {{trip.destination}}</span>
+        <button appButton class="btn-icon">Download</button>
+      </a>
+      <button appButton class="btn-icon" (click)="onDeleteTrip(trip.id)">Delete</button>
+    </li>
     }
     } @else {
     <p>You don't have any registered trips yet!</p>

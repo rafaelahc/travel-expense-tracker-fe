@@ -1,3 +1,16 @@
-.expense {
-    border: 1px solid;
+.expense-cat {
+    background-color: var(--beige);
+    margin: 10px 0;
+    border-radius: 18px;
+    padding: 15px;
+
+}
+
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--lightBlue);
+    padding: 5px 15px;
+    border-radius: 18px;
+
 }

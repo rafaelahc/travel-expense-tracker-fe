@@ -1,18 +1,19 @@
 <div class="expense-wrapper">
   @for (category of categories; track category.id) {
-  <div class="expense-cat">
-    <h3>{{category.name}}</h3>
 
-    <div class="expense">
-      @if (getExpensesByCategory(category.id).length > 0) {
-      @for (expense of getExpensesByCategory(category.id); track expense.id) {
-      <p><strong>Descrição:</strong> {{ expense.description | titlecase }}</p>
-      <p><strong>Valor:</strong> {{ expense.value}}</p>
-      }
-      } @else {
-      <p>Nenhum gasto nesta categoria.</p>
-      }
+  <div class="expense-cat">
+    <h3>{{category.name}} - {{ getTotalByCategory(category.id) | currency:'EUR'}} </h3>
+    <span></span>
+  </div>
+
+  <div class="expense">
+    @for (expense of getExpensesByCategory(category.id); track expense.id) {
+    <div class="expense-item">
+      <p>{{ expense.description | titlecase }}</p>
+      <p>{{ expense.value}}</p>
+      <button (click)="onDeleteExpense(expense.id)">Delete</button>
     </div>
+    }
   </div>
   }
 </div>

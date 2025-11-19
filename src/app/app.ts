@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Auth } from './services/auth-service';
 
 
 //Directive
@@ -9,6 +10,14 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
+export class App implements OnInit {
   title = ('travel-expense-tracker-frontend');
+  authService = inject(Auth);
+
+  ngOnInit() {
+    this.authService.autoLogin();
+  }
+
+
+
 }

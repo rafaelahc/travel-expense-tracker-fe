@@ -1,1 +1,24 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <app-control>
+        <input formControlName="name" placeholder="Name">
+    </app-control>
+    <app-control>
+        <input formControlName="email" placeholder="Email">
+    </app-control>
+    <app-control>
+        <input formControlName="password" type="password" placeholder="Password">
+    </app-control>
+
+    <button appButton type="submit" [disabled]="registerForm.invalid">Register</button>
+</form>
+
+@if(error) {
+<div>
+    <p style="color: red;">{{error}}</p>
+</div>
+}
+
+
+<div>
+    <span>Already have an account? <a routerLink="/login">Log In</a></span>
+</div>

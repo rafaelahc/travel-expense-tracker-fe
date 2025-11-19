@@ -1,0 +1,12 @@
+.control label {
+    color: var(--primary);
+}
+
+.control input {
+    background-color: var(--inputColor);
+    padding: 12px 20px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    margin-top: 10px;
+}
