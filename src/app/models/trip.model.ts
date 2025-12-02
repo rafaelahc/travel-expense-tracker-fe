@@ -6,6 +6,5 @@ export interface Trip {
     days: number,
     peopleQty: string,
     selectedImage: any
-
 }
 

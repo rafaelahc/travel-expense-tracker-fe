@@ -35,7 +35,8 @@ export class Dashboard implements OnInit, OnDestroy {
       this.isAuthenticated = !user ? false : true;
 
       if (user) {
-        this.userId = user.id;
+        this.userId = user.id
+        this.userToken = user.token!;
       }
     })
   }

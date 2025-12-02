@@ -5,18 +5,12 @@
     <button (click)="searchImageFromDB()">Search</button>
 
     <div class="images-container">
-        @if(images.length) {
-        @for(img of images ; track img) {
-        <div class="images-grid">
-            <img [src]="img.webformatURL" [alt]="img.tags" (click)="selectedImage(img)">
-        </div>
-
-        }
+        @if(images().length) {
+            @for(img of images() ; track img) {
+            <div class="images-grid">
+                <img [src]="img.webformatURL" [alt]="img.tags" (click)="selectedImage(img)">
+            </div>
+            }
         }
     </div>
-
-
-
-
-
 </div>

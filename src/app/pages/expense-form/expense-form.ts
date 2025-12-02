@@ -47,7 +47,6 @@ export class ExpenseForm implements OnInit {
 
   ngOnInit() {
     this.tripId = this.route.snapshot.paramMap.get('tripId')!;
-    console.log('Na pagina de expense form, o tripId recebido foi:', this.tripId);
     this.categories = this.categoryService.getCategories();
   }
 
@@ -62,7 +61,6 @@ export class ExpenseForm implements OnInit {
 
     const userData = JSON.parse(localStorage.getItem('userData')!);
     const userId = userData.id;
-    //Pegar o Id da viagem:
 
     const newExpense: Expense = {
       id: '', //precisa ser gerado no firebase
@@ -74,12 +72,11 @@ export class ExpenseForm implements OnInit {
 
     this.expenseService.addExpense(userId, newExpense).subscribe((res: any) => {
       newExpense.id = res.name;
-      console.log('id expense:', res);
-      console.log('Novo Gasto', newExpense);
+      //Navegar para a página do trip details
+      this.router.navigate(['/trip-details/', this.tripId]);
     });
 
-    //Navegar para a página do trip details
-    this.router.navigate(['/trip-details/', this.tripId]);
+
   }
 
 }

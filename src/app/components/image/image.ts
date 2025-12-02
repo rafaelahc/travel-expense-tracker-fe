@@ -18,48 +18,25 @@ export class Image{
 
 
   @Input() userQuery: string = ''; //receber de tripDetails o valor de destination
+
   @Output() imageSelected = new EventEmitter<any>();
 
-  images: any[] = [];
-  searchImage = '';
+  images = this.imageService.images;
+
+  searchImage: string = '';
 
   ngOnInit() {
-    this.imageService.getImages(this.searchImage);
-
     if (this.userQuery) {
-      this.loadImages(this.userQuery);
+      this.imageService.getImages(this.userQuery).subscribe();
     }
   }
 
-  //Carregar imagens aleatorias de acordo com o que foi digitado no destination do input do trip form.
-  loadImages(query: string) {
-    this.imageService.getImages(query)
-      .subscribe((data) => {
-        this.images = data.hits;
-      })
+ //User tem a opção de escolher outra imagem.
+  searchImageFromDB() {
+    this.imageService.getImages(this.searchImage).subscribe();
   }
 
-
-  //Selecionar imagens e enviar para o tripForm
   selectedImage(image: any) {
     this.imageSelected.emit(image);
   }
-
-
-  //User tem a opção de escolher outra imagem.
-  searchImageFromDB() {
-    this.imageService.getImages(this.searchImage).subscribe(
-      {
-        next: (data) => {
-          this.images = data.hits;
-        },
-        error: (err) => {
-          console.error('Oops! Something went wrong while loading the images. Try again in a moment:', err);
-        }
-      }
-
-    )
-  }
-
-
 }

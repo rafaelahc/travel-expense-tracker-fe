@@ -29,69 +29,56 @@ import { User } from '../../models/user.model';
   styleUrl: './trip-details.scss'
 })
 export class TripDetails implements OnInit {
-  private imageService = inject(ImageService);
-  private http = inject(HttpClient);
   private authService = inject(Auth);
-
-  //FireBase database
-  firebaseDataBase = environment.apis.firebase.firebaseTETDataBase;
+  private expenseService = inject(ExpenseService);
+  private tripService = inject(TripService);
+  private imageService = inject(ImageService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   //declaro uma propriedade aqui, onde irá receber valores de Trip. Ou tbm pode ser undefined
   trip?: Trip;
-  days?: string;
   tripId: string = '';
   showImageModal: boolean = false;
 
-  //é como se fosse meu array com todos os gastos
-  expenses?: Expense[];
+  selectedImage = this.imageService.selectedImage;
 
-  totalExpense = 0;
+  //Acesso o meu signal do service.
+  expenses = this.expenseService.expenses;
 
-  //Eu preciso ter acesso ao service, então eu faço um constructor. Tanto do service quanto da rota. (URL)
-  constructor(private expenseService: ExpenseService, private tripService: TripService, private route: ActivatedRoute, private router: Router) { }
-
+  totalGeneral = this.expenseService.totalGeneral;
 
   userId!: string;
 
-  userArr!: User[]
-
-  selectedCategory!: string;
-
   ngOnInit() {
     this.authService.currentUser.pipe(take(1)).subscribe(user => {
-      if (!user || !user.token)
-        
-        return;
-
-      this.userArr = [user];
-      this.userId = this.userArr[0].id;
-      console.log("USER ID:", this.userId);
-      const token = user.token;
-
+      if (!user || !user.token) return;
+      this.userId = user.id;
       this.tripId = this.route.snapshot.paramMap.get('id')!;
 
+      this.tripService.getTripById(this.userId, this.tripId, user.token).subscribe(trip => {
+        this.trip = trip;
 
-      if (this.tripId) {
+        if (trip.selectedImage) {
+          this.imageService.selectedImage.set(trip.selectedImage);
+        }
 
-        this.tripService.getTripById(this.userId, this.tripId, token).subscribe(t => {
-          this.trip = t;
-        });
-      }
+      });
 
-      
-      console.log("TRIP ID:", this.tripId);
-      console.log("CATEGORY:", this.selectedCategory);
-
-      return;
-
+      this.expenseService.loadExpenses(this.userId, this.tripId).subscribe();
     })
+  }
 
-    this.totalExpense = this.expenseService.getTotalExpenses();
+  imageSelectedByUser(image: any) {
+    if (this.trip) {
+      this.tripService.updateTripImage(this.userId, this.tripId, image).subscribe();      
+      this.imageService.changeImage(image);
+      this.trip.selectedImage = this.selectedImage();
+      this.showImageModal = false;
+    }
   }
 
   openNewExpense(tripId: string) {
-    console.log('Botão clicado', tripId);
-
     if (tripId) {
       this.router.navigate(['/expense-form', tripId]);
     }
@@ -105,10 +92,6 @@ export class TripDetails implements OnInit {
     this.showImageModal = false;
   }
 
-  imageSelected(image: any) {
-    if (this.trip) {
-      this.trip.selectedImage = image;
-      this.showImageModal = false;
-    }
-  }
+
+
 }

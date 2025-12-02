@@ -1,9 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TripService } from '../../services/trip-service';
 
-import { type Trip } from '../../models/trip.model';
 import { RouterModule } from '@angular/router';
 
 import { Button } from '../../shared/button/button';
@@ -22,39 +21,29 @@ export class TripList {
   @Input() userId!: string;
   @Input() userToken!: string;
 
-
+  private tripService = inject(TripService);
 
   //crio uma variável que vai receber os dados passado que será a minha lista.,
-  trips: Trip[] = [];
-
-  //Estou construindo uma variavel/objeto que vai instanciar o trip service
-  constructor(private tripService: TripService) { }
-
+  trips = this.tripService.trips;
 
   ngOnInit() {
-    console.log('UserId recebido no TripList:', this.userId);
+    console.log('user', this.userId);
+    console.log('token', this.userToken);
 
-    this.tripService.getTripsFromFirebase(this.userId, this.userToken).subscribe((res: { [key: string]: any }) => {
-      if (!res) {
-        this.trips = [];
-        return;
-      }
-      this.trips = Object.keys(res).map(key => ({ id: key, ...res[key] }));
-    });
+    if (this.userId && this.userToken) {
+      this.tripService.loadedTrips(this.userId, this.userToken).subscribe(() => { console.log('Trips', this.trips()); });
+    }
 
   }
 
   onDeleteTrip(tripId: string) {
-    console.log('clicou no botão')
-    const userData = JSON.parse(localStorage.getItem('userData')!);
-    const userId = userData.id;
+    if (!this.userId) return;
 
-    this.tripService.deleteTrip(userId, tripId).subscribe(() => {
-      this.trips = this.trips.filter(t => t.id !== userId);
+    this.tripService.deleteTrip(this.userId, tripId).subscribe(() => {
+      this.trips.set(this.trips().filter(t => t.id !== tripId))
     })
-
-    this.trips = this.trips.filter(t => t.id !== tripId);
   }
 
 
 }
+

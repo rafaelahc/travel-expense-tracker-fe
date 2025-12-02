@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../environments/environment';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +12,34 @@ export class ImageService {
   private apiPixabay = environment.apis.apiPixabay;
   private apiKey = environment.apiKeys.pixabay;
 
+  //signals: Lista que vou receber as imagens da API e imagem selecionada pelo user
+  images = signal<any[]>([]);
+  selectedImage = signal<any | null>(null)
 
   //Estou pegando as imagens na base de dados com a query/pesquisa que o user vai fazer
   getImages(query: string): Observable<any> {
     const url = `${this.apiPixabay}?key=${this.apiKey}&q=${query}&image_type=photo`;
-    return this.http.get(url);
+    return this.http.get(url).pipe(
+      tap((res: any) => {
+        this.images.set(res.hits);
+      })
+    );
   }
 
-
-  //carregar uma imagem aleatório quando o user preenche as coisas no tripForm, essa imagem vai ser recebida no trip details
+  //carregar uma imagem aleatória (De acordo com o que foi digitado) quando o user preenche as coisas no tripForm, essa imagem vai ser recebida no trip details
   getRamdomImage(query: string): Observable<any> {
     return this.getImages(query)
       .pipe(map(data => {
-        const hits = data.hits;
-        const randomImageIndex = Math.floor(Math.random() * hits.length);
-        return hits[randomImageIndex];
+        const arrImages = data.hits; //retornar o array inteiro
+        const randomImageIndex = Math.floor(Math.random() * arrImages.length); // "sortear" um índice aleatório desse array
+        return arrImages[randomImageIndex];
       })
-
     );
   }
 
 
+  changeImage(image: any) {
+    this.selectedImage.set(image);
+  }
 
-
-}
+} 

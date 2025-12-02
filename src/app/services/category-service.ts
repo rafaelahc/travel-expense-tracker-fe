@@ -28,7 +28,6 @@ export class CategoryService {
     },
   ];
 
-
   getCategories(): Category[] {
     return this.categories
   }

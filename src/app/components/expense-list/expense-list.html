@@ -7,12 +7,15 @@
   </div>
 
   <div class="expense">
-    @for (expense of getExpensesByCategory(category.id); track expense.id) {
+    @for (expense of expenses(); track expense.id) {
+    @if(expense.categoryId === category.id) {
     <div class="expense-item">
       <p>{{ expense.description | titlecase }}</p>
-      <p>{{ expense.value}}</p>
-      <button (click)="onDeleteExpense(expense.id)">Delete</button>
+      <p>{{ expense.value | currency:'EUR'}} </p>
+      <button (click)="deleteExpense(expense.id)">Delete</button>
     </div>
+    }
+
     }
   </div>
   }

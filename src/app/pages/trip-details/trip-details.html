@@ -1,5 +1,5 @@
 @if (trip) {
-    
+
 <div>
     <div class="header" [ngStyle]="{'background-image': 'url(' + trip.selectedImage?.webformatURL + ')',
                  'background-size': 'cover',
@@ -19,11 +19,11 @@
 
 
         <div class="total">
-            <span>{{totalExpense}}</span>
+            <span>{{totalGeneral() | currency:'EUR'}}</span>
         </div>
 
         <div>
-            <button (click)="openNewBackground()">background</button>
+            <button (click)="openNewBackground()">Editar background</button>
         </div>
     </div>
 
@@ -31,7 +31,7 @@
 
 <div class="expense-content">
     <div class="test">
-        <app-expense-list [userId]="userId" [tripId]="tripId" [selectedCategory]="selectedCategory" />
+        <app-expense-list [userId]="userId" [tripId]="tripId" />
     </div>
 
 </div>
@@ -40,7 +40,7 @@
 <div class="modal">
     <div class="modal-content">
         <span class="close-modal" (click)="closeImageModal()"></span>
-        <app-image [userQuery]="trip.destination" (imageSelected)="imageSelected($event)"></app-image>
+        <app-image [userQuery]="trip.destination" (imageSelected)="imageSelectedByUser($event)"></app-image>
     </div>
 </div>
 }
